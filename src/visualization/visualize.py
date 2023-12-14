@@ -24,7 +24,7 @@ def evaluate(model, X, y, split, live, save_path):
     """
 
     predictions_by_class = model.predict_proba(X)
-    predictions = predictions_by_class[:, 1]
+    predictions = predictions_by_class[:, 0]
 
     # Use dvclive to log a few simple metrics...
     avg_prec = metrics.average_precision_score(y, predictions)
@@ -93,7 +93,7 @@ def main():
     output_path = home_dir.as_posix() + '/dvclive'
     pathlib.Path(output_path).mkdir(parents=True, exist_ok=True)
     
-    TARGET = 'Class'
+    TARGET = 'Survived'
     train_features = pd.read_csv(data_path + '/train.csv')
     X_train = train_features.drop(TARGET, axis=1)
     y_train = train_features[TARGET]
